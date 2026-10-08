@@ -2794,6 +2794,8 @@
     <string name="app_name_alarmtile">Alarm Tile</string>
     <string name="app_name_solsticewidget0">Solstice Widget</string>
     <string name="app_name_moonwidget0">Moon Widget</string>
+    <string name="app_name_daylengthwidget0">Day Length Widget</string>
+    <string name="daylength_widget_label">Day length: <xliff:g id="value">%1$s</xliff:g></string>    <!-- e.g. "Day length: 07:01:01 -3:13" -->
 
     <string name="about_app_version_field"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="about_app_support_field"><![CDATA[

@@ -2259,6 +2259,8 @@
     <string name="app_name_clockwidget0">Часы</string>
     <string name="app_name_solsticewidget0">Солнцестояние</string>
     <string name="app_name_moonwidget0">Луна</string>
+    <string name="app_name_daylengthwidget0">Долгота дня</string>
+    <string name="daylength_widget_label">Долг. дня: <xliff:g id="value">%1$s</xliff:g></string>
     <string name="about_app_version_field"><![CDATA[<b>Версия:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Показывает время солнечного и лунного освещения.</string>
     <string name="about_app_support_field"><![CDATA[

@@ -12,6 +12,8 @@
     <dimen name="widget_sun0_1x1_minWidth">@dimen/widget_size_minWidth</dimen>
     <dimen name="widget_sun0_2x1_minWidth">@dimen/widget_size_minWidth2x1</dimen>
     <dimen name="widget_sun0_3x1_minWidth">@dimen/widget_size_minWidth3x1</dimen>
+    <dimen name="widget_daylength0_2x1_minWidth">@dimen/widget_size_minWidth2x1</dimen>    <!-- same for all api levels -->
+    <dimen name="widget_daylength0_3x1_minWidth">@dimen/widget_size_minWidth3x1</dimen>
 
     <dimen name="widget_sun1_1x1_minWidth">@dimen/widget_size_minWidth</dimen>
     <dimen name="widget_sun2_1x1_minWidth">@dimen/widget_size_minWidth</dimen>

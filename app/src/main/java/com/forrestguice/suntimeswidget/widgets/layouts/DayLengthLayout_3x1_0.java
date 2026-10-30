@@ -17,7 +17,12 @@
 
 package com.forrestguice.suntimeswidget.widgets.layouts;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -46,17 +51,47 @@ public class DayLengthLayout_3x1_0 extends SunLayout_3x1_0
         return adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp, iconSizeDp);
     }
 
+    protected String dayLengthValue = "";
+    protected String dayLengthText = "";
+
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
     {
+        DayLengthDisplay dayLength = DayLengthDisplay.create(context, appWidgetId);
+        dayLengthValue = dayLength.dayLength + " " + dayLength.dayDelta;
+        dayLengthText = context.getString(R.string.daylength_widget_label, dayLengthValue);    // before super.updateViews (calls scaleViews)
+
         super.updateViews(context, appWidgetId, views, data);
 
-        DayLengthDisplay dayLength = DayLengthDisplay.create(context, appWidgetId);
-        String value = dayLength.dayLength + " " + dayLength.dayDelta;
-        String text = context.getString(R.string.daylength_widget_label, value);
-        CharSequence span = (boldTime ? SpanUtils.createBoldColorSpan(null, text, value, timeColor)
-                                      : SpanUtils.createColorSpan(null, text, value, timeColor));
+        CharSequence span = (boldTime ? SpanUtils.createBoldColorSpan(null, dayLengthText, dayLengthValue, timeColor)
+                                      : SpanUtils.createColorSpan(null, dayLengthText, dayLengthValue, timeColor));
         views.setTextViewText(R.id.text_delta_day_value, span);
         views.setViewVisibility(R.id.layout_delta_day, View.VISIBLE);
+    }
+
+    /**
+     * Scales the day length line by the same factor as the times (limited to the widget's width).
+     */
+    @TargetApi(16)
+    @Override
+    public void scaleViews(Context context, int appWidgetId, RemoteViews views, float[] adjustedSizeSp)
+    {
+        super.scaleViews(context, appWidgetId, views, adjustedSizeSp);
+        if (adjustedSizeSp[0] > timeSizeSp)
+        {
+            float sizeSp = textSizeSp * (adjustedSizeSp[0] / timeSizeSp);
+
+            Paint paint = new Paint();
+            paint.setTypeface(Typeface.create("sans-serif", boldTime ? Typeface.BOLD : Typeface.NORMAL));
+            Rect bounds = new Rect();
+            getTextBounds(context, dayLengthText, sizeSp, paint, bounds);
+
+            float maxWidthDp = maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]) - 8;
+            float maxWidthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxWidthDp, context.getResources().getDisplayMetrics());
+            if (bounds.width() > maxWidthPx) {
+                sizeSp *= (maxWidthPx / bounds.width());
+            }
+            views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_DIP, Math.max(sizeSp, textSizeSp));
+        }
     }
 }
